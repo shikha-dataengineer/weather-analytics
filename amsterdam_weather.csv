@@ -1,0 +1,2 @@
+weather,base,visibility,dt,timezone,id,name,cod,coord.lon,coord.lat,main.temp,main.feels_like,main.temp_min,main.temp_max,main.pressure,main.humidity,main.sea_level,main.grnd_level,wind.speed,wind.deg,clouds.all,sys.type,sys.id,sys.country,sys.sunrise,sys.sunset
+"[{'id': 801, 'main': 'Clouds', 'description': 'few clouds', 'icon': '02n'}]",stations,10000,1752006591,7200,2759794,Amsterdam,200,4.8897,52.374,15.75,15.21,14.92,16.65,1018,70,1018,1017,4.63,310,20,2,2046553,NL,1751945315,1752004924

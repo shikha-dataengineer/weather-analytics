@@ -1,5 +1,19 @@
+import os
+
+# Setup GCP credentials for Google Cloud Storage
+gcp_key = os.environ.get("GCP_SERVICE_ACCOUNT_KEY")
+
+if gcp_key:
+    with open("gcp_key.json", "w") as f:
+        f.write(gcp_key)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_key.json"
+else:
+    print("ERROR: GCP_SERVICE_ACCOUNT_KEY not found in environment variables.")
+    exit(1)
+
 import requests
 import pandas as pd
+from google.cloud import storage
 
 # Weather API details
 API_KEY = "445a0f5faf7f919d9a94b4a30e00ed10"

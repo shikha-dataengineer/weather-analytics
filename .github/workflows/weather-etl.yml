@@ -1,14 +1,14 @@
 name: Weather ETL Workflow
 
-#on:
-  #schedule:
-    #- cron: "0 */6 * * *"  # every 6 hours
-  #workflow_dispatch:
+on:
+  schedule:
+    - cron: "0 */6 * * *"  # every 6 hours
+  workflow_dispatch:
 
   #name: Weather ETL Workflow
 
-on:
-  workflow_dispatch:   # manual trigger
+#on:
+  #workflow_dispatch:   # manual trigger
 
 jobs:
   run-weather-etl:

@@ -1,9 +1,14 @@
 name: Weather ETL Workflow
 
+#on:
+  #schedule:
+    #- cron: "0 */6 * * *"  # every 6 hours
+  #workflow_dispatch:
+
+  #name: Weather ETL Workflow
+
 on:
-  schedule:
-    - cron: "0 */6 * * *"  # every 6 hours
-  workflow_dispatch:
+  workflow_dispatch:   # manual trigger
 
 jobs:
   run-weather-etl:
@@ -18,13 +23,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      #- name: Install dependencies
-        #run: pip install -r requirements.txt
-
-      - name: Set up GCP credentials
-        run: |
-          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > key.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/key.json
-
       - name: Run Weather ETL script
-        run: python script/weather.py
+        env:
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$GCP_SERVICE_ACCOUNT_KEY" > key.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/key.json
+          pip install requests pandas google-cloud-storage pyarrow
+          python script/weather.py

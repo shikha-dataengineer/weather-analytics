@@ -1,27 +1,30 @@
-name: Weather ETL Pipeline
+name: Weather ETL Workflow
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # Runs every day at 8 AM UTC
-  workflow_dispatch:      # Allows manual trigger from GitHub UI
+    - cron: "0 */6 * * *"  # every 6 hours
+  workflow_dispatch:
 
 jobs:
   run-weather-etl:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔄 Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: 📦 Install Dependencies
-        run: |
-          pip install pandas requests google-cloud-storage
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: 🚀 Run Weather ETL Script
+      - name: Set up GCP credentials
         run: |
-          python script/weather.py
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > key.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/key.json
+
+      - name: Run Weather ETL script
+        run: python script/weather.py
